@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TaskGrind — Real tasks. Real pay. Real growth.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #14161A;
+    --bg-raised: #1B1E24;
+    --text: #F2F0EA;
+    --text-dim: #9A9C9F;
+    --text-dimmer: #67696D;
+    --green: #3ECF8E;
+    --amber: #D9A441;
+    --border: #2A2D33;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .mono { font-family: 'JetBrains Mono', monospace; }
+  .display { font-family: 'Space Grotesk', sans-serif; }
+
+  a { color: inherit; text-decoration: none; }
+
+  .wrap {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* ---------- Nav ---------- */
+  nav {
+    padding: 24px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  nav .wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .logo {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 1.15rem;
+    letter-spacing: -0.02em;
+  }
+  .logo span { color: var(--green); }
+  .nav-links { display: flex; gap: 28px; }
+  .nav-links a {
+    font-size: 0.9rem;
+    color: var(--text-dim);
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--text); }
+  .nav-links a:focus-visible { outline: 2px solid var(--green); outline-offset: 4px; border-radius: 2px; }
+
+  /* ---------- Ticker ---------- */
+  .ticker-outer {
+    border-bottom: 1px solid var(--border);
+    overflow: hidden;
+    background: var(--bg-raised);
+  }
+  .ticker {
+    display: flex;
+    white-space: nowrap;
+    animation: scroll 28s linear infinite;
+    width: max-content;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ticker { animation: none; }
+  }
+  .ticker span {
+    padding: 10px 28px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--text-dimmer);
+    letter-spacing: 0.02em;
+    border-right: 1px solid var(--border);
+  }
+  .ticker span::before { content: "→ "; color: var(--green); }
+  @keyframes scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    padding: 100px 0 80px;
+    border-bottom: 1px solid var(--border);
+  }
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--green);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .eyebrow::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--green);
+    box-shadow: 0 0 0 4px rgba(62,207,142,0.15);
+  }
+  h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: clamp(2.2rem, 5.5vw, 3.6rem);
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    max-width: 780px;
+    margin-bottom: 24px;
+  }
+  h1 .accent { color: var(--green); }
+  .hero-sub {
+    font-size: 1.1rem;
+    color: var(--text-dim);
+    max-width: 560px;
+    margin-bottom: 44px;
+  }
+
+  /* ---------- Split paths ---------- */
+  .paths {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  @media (max-width: 700px) {
+    .paths { grid-template-columns: 1fr; }
+  }
+  .path-card {
+    background: var(--bg-raised);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 28px;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .path-card:hover { transform: translateY(-2px); }
+  .path-card.earn:hover { border-color: var(--green); }
+  .path-card.brand:hover { border-color: var(--amber); }
+  .path-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .path-card.earn .path-label { color: var(--green); }
+  .path-card.brand .path-label { color: var(--amber); }
+  .path-card h3 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.3rem;
+    margin-bottom: 8px;
+  }
+  .path-card p {
+    color: var(--text-dim);
+    font-size: 0.92rem;
+    margin-bottom: 20px;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 20px;
+    border-radius: 7px;
+    font-size: 0.88rem;
+    font-weight: 500;
+    transition: opacity 0.2s;
+  }
+  .btn:hover { opacity: 0.85; }
+  .btn:focus-visible { outline: 2px solid var(--text); outline-offset: 2px; }
+  .btn-green { background: var(--green); color: #0C1210; }
+  .btn-amber { background: var(--amber); color: #1A1305; }
+
+  /* ---------- Section shared ---------- */
+  section { padding: 88px 0; border-bottom: 1px solid var(--border); }
+  .section-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--text-dimmer);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  h2 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(1.6rem, 3.5vw, 2.3rem);
+    letter-spacing: -0.01em;
+    margin-bottom: 16px;
+    max-width: 640px;
+  }
+  .section-sub {
+    color: var(--text-dim);
+    max-width: 560px;
+    margin-bottom: 56px;
+    font-size: 1.02rem;
+  }
+
+  /* ---------- Steps ---------- */
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+  @media (max-width: 900px) {
+    .steps { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 520px) {
+    .steps { grid-template-columns: 1fr; }
+  }
+  .step .num {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--green);
+    font-size: 0.85rem;
+    margin-bottom: 12px;
+  }
+  .step h4 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.05rem;
+    margin-bottom: 8px;
+  }
+  .step p { color: var(--text-dim); font-size: 0.9rem; }
+
+  /* ---------- Brand section (dark raised) ---------- */
+  .brand-section { background: var(--bg-raised); }
+  .brand-section .section-tag { color: var(--amber); }
+
+  .offer-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  @media (max-width: 700px) {
+    .offer-grid { grid-template-columns: 1fr; }
+  }
+  .offer-card {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 24px;
+    background: var(--bg);
+  }
+  .offer-card h4 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.05rem;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .offer-card h4::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    background: var(--amber);
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+  .offer-card p { color: var(--text-dim); font-size: 0.9rem; }
+
+  .brand-flow {
+    margin-top: 56px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .flow-step {
+    flex: 1;
+    min-width: 200px;
+    padding: 22px 20px;
+    border-right: 1px solid var(--border);
+  }
+  .flow-step:last-child { border-right: none; }
+  .flow-step .mono { color: var(--amber); font-size: 0.75rem; display: block; margin-bottom: 8px; }
+  .flow-step p { font-size: 0.88rem; color: var(--text-dim); }
+
+  /* ---------- Trust / live status ---------- */
+  .trust {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  @media (max-width: 700px) {
+    .trust { grid-template-columns: 1fr; }
+  }
+  .trust-card {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 26px;
+  }
+  .trust-card .mono {
+    color: var(--green);
+    font-size: 0.75rem;
+    letter-spacing: 0.04em;
+    display: block;
+    margin-bottom: 10px;
+  }
+  .trust-card p { color: var(--text); font-size: 0.95rem; }
+  .trust-card p.dim { color: var(--text-dim); font-size: 0.85rem; margin-top: 6px; }
+
+  /* ---------- CTA banner ---------- */
+  .cta-banner {
+    text-align: center;
+    padding: 100px 24px;
+  }
+  .cta-banner h2 { margin: 0 auto 16px; }
+  .cta-banner .section-sub { margin: 0 auto 40px; }
+  .cta-row { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+  /* ---------- Footer ---------- */
+  footer { padding: 44px 0; }
+  footer .wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  footer .foot-left { color: var(--text-dimmer); font-size: 0.85rem; }
+  footer .foot-links { display: flex; gap: 22px; }
+  footer .foot-links a { color: var(--text-dim); font-size: 0.85rem; }
+  footer .foot-links a:hover { color: var(--text); }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="logo">Task<span>Grind</span></div>
+    <div class="nav-links">
+      <a href="#earn">Earn</a>
+      <a href="#brands">For brands</a>
+      <a href="#trust">How it works</a>
+    </div>
+  </div>
+</nav>
+
+<div class="ticker-outer">
+  <div class="ticker">
+    <span>Follow a page</span>
+    <span>Download an app</span>
+    <span>Test a product</span>
+    <span>Join a channel</span>
+    <span>Leave a review</span>
+    <span>Sign up for a service</span>
+    <span>Follow a page</span>
+    <span>Download an app</span>
+    <span>Test a product</span>
+    <span>Join a channel</span>
+    <span>Leave a review</span>
+    <span>Sign up for a service</span>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Live on Telegram</div>
+    <h1>Real tasks. Real pay.<br>Real growth for <span class="accent">real brands.</span></h1>
+    <p class="hero-sub">TaskGrind connects people who complete simple tasks for pay with brands and businesses who need genuine users — not bots, not fake engagement.</p>
+
+    <div class="paths">
+      <div class="path-card earn">
+        <div class="path-label">For task-doers</div>
+        <h3>Start earning</h3>
+        <p>Browse open tasks, submit proof, get paid straight to your wallet. No experience needed.</p>
+        <a href="https://t.me/TaskGrindBot" class="btn btn-green">Open the bot →</a>
+      </div>
+      <div class="path-card brand">
+        <div class="path-label">For businesses</div>
+        <h3>Get real users</h3>
+        <p>Tell us what you need done. We recruit real people, verify every submission, you pay per completion.</p>
+        <a href="#brands" class="btn btn-amber">See how it works →</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section id="earn">
+  <div class="wrap">
+    <div class="section-tag">For task-doers</div>
+    <h2>Four steps. No catch.</h2>
+    <p class="section-sub">Every task is reviewed by a real person before you get paid — so payouts are fair and consistent.</p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="num mono">01</div>
+        <h4>Open the bot</h4>
+        <p>Join TaskGrind on Telegram and browse what's currently open.</p>
+      </div>
+      <div class="step">
+        <div class="num mono">02</div>
+        <h4>Pick a task</h4>
+        <p>Downloads, follows, sign-ups, testing — pick what fits, see the reward upfront.</p>
+      </div>
+      <div class="step">
+        <div class="num mono">03</div>
+        <h4>Submit proof</h4>
+        <p>A screenshot or screen recording showing you completed it.</p>
+      </div>
+      <div class="step">
+        <div class="num mono">04</div>
+        <h4>Get paid</h4>
+        <p>Once approved, your balance updates. Withdraw whenever you're ready.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="brands" class="brand-section">
+  <div class="wrap">
+    <div class="section-tag">For businesses & brands</div>
+    <h2>Engagement you can actually verify.</h2>
+    <p class="section-sub">Every task-doer submits proof before getting paid. You're not buying numbers — you're buying real people doing real things.</p>
+
+    <div class="offer-grid">
+      <div class="offer-card">
+        <h4>App downloads & sign-ups</h4>
+        <p>Get real installs and account creations from people who complete the full flow, not drop off halfway.</p>
+      </div>
+      <div class="offer-card">
+        <h4>Social follows & engagement</h4>
+        <p>Grow your following with accounts run by real people, verified with proof — not farms.</p>
+      </div>
+      <div class="offer-card">
+        <h4>Product & feature testing</h4>
+        <p>Put your product in front of genuine first-time users and get honest usage before a wider launch.</p>
+      </div>
+      <div class="offer-card">
+        <h4>Reviews & feedback</h4>
+        <p>Collect real written reviews or usage feedback from people who actually tried what you built.</p>
+      </div>
+    </div>
+
+    <div class="brand-flow">
+      <div class="flow-step">
+        <span class="mono">STEP 1</span>
+        <p>Tell us what you need done and how many completions</p>
+      </div>
+      <div class="flow-step">
+        <span class="mono">STEP 2</span>
+        <p>We recruit real users and list it as a task</p>
+      </div>
+      <div class="flow-step">
+        <span class="mono">STEP 3</span>
+        <p>Every submission is manually verified before approval</p>
+      </div>
+      <div class="flow-step">
+        <span class="mono">STEP 4</span>
+        <p>You pay per verified completion — nothing wasted on fakes</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="trust">
+  <div class="wrap">
+    <div class="section-tag">Why it works</div>
+    <h2>Built on verification, not volume.</h2>
+    <p class="section-sub">The whole system exists because most "engagement" services sell numbers that don't hold up. This one doesn't.</p>
+
+    <div class="trust">
+      <div class="trust-card">
+        <span class="mono">MANUAL REVIEW</span>
+        <p>Every task submission is checked by a real person before payment.</p>
+        <p class="dim">No auto-approval, no bots grading bots.</p>
+      </div>
+      <div class="trust-card">
+        <span class="mono">ONE PER TASK</span>
+        <p>Each task-doer can only complete a task once — no farming the same reward.</p>
+        <p class="dim">Keeps completions genuine, not repeated.</p>
+      </div>
+      <div class="trust-card">
+        <span class="mono">RUNNING LIVE</span>
+        <p>TaskGrind is an active, working system — not a concept or a waitlist.</p>
+        <p class="dim">Open the bot and see it yourself.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="cta-banner">
+  <div class="wrap">
+    <h2 style="margin-left:auto;margin-right:auto;">Ready when you are.</h2>
+    <p class="section-sub">Whether you're looking to earn or looking to grow — it starts in the same place.</p>
+    <div class="cta-row">
+      <a href="https://t.me/TaskGrindBot" class="btn btn-green">Start earning →</a>
+      <a href="https://t.me/Skiiddd" class="btn btn-amber">Talk to us about your brand →</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-left">TaskGrind — built and run on Telegram.</div>
+    <div class="foot-links">
+      <a href="https://t.me/TaskGrindBot">Bot</a>
+      <a href="https://t.me/+EEDVwNc2s345OGVk">Community</a>
+      <a href="https://t.me/Skiiddd">Support</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
